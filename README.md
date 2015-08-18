@@ -1,38 +1,47 @@
-# Host a BitcoinXT node on Ubuntu Server 14.04 LTS / Microsoft Azure
+# Host a BitcoinXT node on Ubuntu Server 14.04 LTS / Microsoft Azure #
 
 Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full BitcoinXT node permanently on using Microsoft's Azure.
 
-##Requirements
+### Requirements ###
 1. Secondary drive large enough for the block chain growth
 2. No wallet
 3. No UI
 4. Allow to be discovered by opening firewall
 5. Good uptime
 
-##Create an Ubuntu VM on Azure
+Start from the Microsoft Azure portal https://portal.azure.com
 
-From the Microsoft Azure portal https://manage.windowsazure.com.
+### Create an Ubuntu Server VM on Azure ###
 
-1. Select Virtual Machines -> New -> Create Quick.
-2. Give the node a DNS name
-3. Select Ubuntu 14.10 from the images drop down
+1. Select New -> Compute -> Ubuntu Server 14.04 LTS -> Create
+2. Enter Host Name, e.g. BitcoinXT-2
+3. Enter User name, e.g. bitcoin
+3. Set Authentication type, e.g. Password
 4. Set a password
-5. The size should be set to A2 as a minimum while the code is built, then scaled back to A0 after.
-6. Select your region
-7. Attach a second 120GB empty disk (to be used for the block chain)
+5. Select A2 Standard (2 cores, 3.5 GB RAM) as a minimum while the code is built and blockchain is synced, then scaled back to A1 when all is set.
+6. Select Option Configuration -> Endpoints -> New entry ->
+ 1. Endpoint: Bitcoin
+ 2. Private Port: 8333
+ 3. Protocol: TCP
+ 4. Public Port: 8333
+ 5. Click OK
+7. Click OK to accept Optional config settings
+8. Select Location, e.g. East US
+9. Click Create
+10. Wait until the VM has been created
 
-![Step1](https://github.com/evapeak/bitcoind/blob/master/azure1.png)
-![Step2](https://github.com/evapeak/bitcoind/blob/master/azure2.png)
+### Attach a second 120GB empty disk (to be used for the block chain) ###
 
-User is: azureuser
-Password is: xxx
-
-###Open Azure firewall port
-To allow other bitcoin nodes to discover yours, we need to allow TCP 8333 port to be opened.  From Azure select endpoints tab.  Add new endpoint Port 8333 TCP.
+1. Select Home
+2. Select the VM, e.g. BitcoinXT-2
+3. Select All settings -> Disks -> Attach New ->
+ 1. Size (GB): 120
+ 2. Click OK
+4. Wait until the new disk has been attached
 
 You may want to restrict access to port 22 (SSH port) to your own IP.
 
-Now we can SSH into the VM, using ssh azureuser@yournode.cloudapp.net
+Now we can SSH into the VM, using ssh, e.g. bitcoin@bitcoinxt-2.cloudapp.net
 
 ###Prerequisites
 
