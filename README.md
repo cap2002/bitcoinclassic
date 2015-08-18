@@ -114,13 +114,13 @@ echo 'rpcpassword=XXXXyy1yXXXyyX1XXy1XXy1XXXy1Xy1y11XyXyXyyXXy' >>  ~/.bitcoin/b
 echo 'server=1' >>  ~/.bitcoin/bitcoin.conf
 ```
 
-Verify config-file values are in the file:
+Verify config-file values are in the file.
 ```
 more ~/.bitcoin/bitcoin.conf
 ```
 
 ### Move blocks ###
-We now will move the blocks from the default location to the secondary drive, and create a static link.
+We now move the blocks from the default location to the secondary drive, and create a static link.
 
 ```
 cd /
@@ -129,7 +129,7 @@ sudo rm -R ~/.bitcoin/blocks
 ln -s /media/data/blocks blocks
 ```
 
-To check this has worked perform the following
+To check this has worked perform the following.
 ```
 cd ~/.bitcoin
 ls -al
@@ -141,12 +141,38 @@ Node that it's the current user, bitcoin, that has file access.
 ### Done ###
 The daemon should now be ready to start.
 
-Type the following to start the node
+Type the following to start the node.
 ```
 bitcoind -daemon
 ```
 
 You should see "bitcoind starting"
+
+### Test ###
+Type the following to run a small test
+```
+bitcoin-cli getinfo
+```
+
+The output should be something like this
+```javascript
+{
+    "version" : 110000,
+    "protocolversion" : 70010,
+    "blocks" : 90012,
+    "timeoffset" : -1,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 3091.73689041,
+    "testnet" : false,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+```
+
+Also, go to https://getaddr.bitnodes.io/ and type in the node network address, e.g. bitcoinxt-2.cloudapp.net, and click "CHECK NODE". Something like the following should show to verify you are running BitcoinXT:
+
+`137.135.101.182:8333 /Bitcoin XT:0.11.0/`
 
 ### Trouble shooting ###
 
