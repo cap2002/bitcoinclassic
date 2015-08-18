@@ -1,6 +1,6 @@
-# Host a bitcoind node on Ubuntu 14.10 / Microsoft Azure
+# Host a BitcoinXT node on Ubuntu Server 14.04 LTS / Microsoft Azure
 
-Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full bitcoin node using bitcoind, permanlty on using Microsoft's Azure.
+Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full BitcoinXT node permanently on using Microsoft's Azure.
 
 ##Requirements
 1. Secondary drive large enough for the block chain growth
