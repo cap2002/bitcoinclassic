@@ -19,16 +19,20 @@ Start from the Microsoft Azure portal https://portal.azure.com
 3. Set Authentication type, e.g. Password
 4. Set a password
 5. Select A2 Standard (2 cores, 3.5 GB RAM) as a minimum while the code is built and blockchain is synced, then scaled back to A1 when all is set.
-6. Select Option Configuration -> Endpoints -> New entry ->
+6. Select Option Configuration -> Network -> IP adresses ->
+ 1. Instance IP address: On
+ 2. Click OK
+ 3. Click OK
+7. Select Endpoints -> New entry ->
  1. Endpoint: Bitcoin
  2. Private Port: 8333
  3. Protocol: TCP
  4. Public Port: 8333
  5. Click OK
-7. Click OK to accept Optional config settings
-8. Select Location, e.g. East US
-9. Click Create
-10. Wait until the VM has been created
+8. Click OK to accept Optional config settings
+9. Select Location, e.g. East US
+10. Click Create
+11. Wait until the VM has been created
 
 ### Attach a second 120GB empty disk (to be used for the block chain) ###
 
@@ -41,90 +45,118 @@ Start from the Microsoft Azure portal https://portal.azure.com
 
 You may want to restrict access to port 22 (SSH port) to your own IP.
 
-Now we can SSH into the VM, using ssh, e.g. bitcoin@bitcoinxt-2.cloudapp.net
+Now we can SSH into the VM, e.g. bitcoin@bitcoinxt-2.cloudapp.net. If connection was not made, try restarting the server.
 
-###Prerequisites
+### Prerequisites ###
 
 For the software to build a few dependencies must be installed first.  You can install them by the following commands.
 
 ```
 sudo apt-get update
-sudo apt-get install python-software-properties
-sudo apt-get install build-essential libboost-all-dev automake libtool autoconf
-sudo apt-get install libdb++-dev
-sudo apt-get install libboost-all-dev
-sudo apt-get install pkg-config
-sudo apt-get install libssl-dev
-sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
-sudo apt-get install git
+sudo apt-get -y install python-software-properties
+sudo apt-get -y install build-essential libboost-all-dev automake libtool autoconf
+sudo apt-get -y install libdb++-dev
+sudo apt-get -y install libboost-all-dev
+sudo apt-get -y install pkg-config
+sudo apt-get -y install libssl-dev
+sudo apt-get -y install libcurl4-openssl-dev
+sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+sudo apt-get -y install git
+
 ```
 
-###Mount data drive
-Format the data drive using ext3 filesystem and mount it.  The secondary drive should be named /dev/sdc
+### Mount data drive ###
+Format the data drive using ext3 filesystem and mount it. The secondary drive should be named /dev/sdc
 ```
 sudo fdisk /dev/sdc
 n
 p
 1
+(Enter)
+(Enter)
 w
+sudo mkfs.ext3 /dev/sdc1
 sudo mkdir /media/data
-sudo mount -t ext3 /dev/sdc 
+sudo mount /dev/sdc1 /media/data
+cd /media/data
+sudo su -c "echo '/dev/sdc1 /media/data ext3 defaults 0 0' >> /etc/fstab"
 ```
 
-###Build bitcoind
-Now we will get bitcoin source from github (bitcoin brisbane fork) and compile.  Feel free to use the bitcoin/bitcoin repository if you like.
+### Make BitcoinXT ###
+Now we will get the BitcoinXT source from GitHub and make the executables.
 ```
-sudo git clone https://github.com/bitcoin/bitcoin
-cd bitcoin
-sudo git checkout 0.10
+sudo git clone https://github.com/bitcoinxt/bitcoinxt
+cd bitcoinxt
 sudo ./autogen.sh
-sudo ./configure --with-cli=no --with-gui=no --disable-wallet
+sudo ./configure --with-cli=yes --with-gui=no --disable-wallet
 sudo make 
 sudo make install
 ```
 
 Note, if there is an error on autogen.sh, re install the pre reqs.
 
-###Move blocks
+### Initial run ###
+We will run bitcoind once so it generates the proper directories.
 
+```
+ bitcoind -server
+```
+
+Write down or copy the generated rpcuser and rpcpassword values.
+
+### Configure ###
+Run the following to generate the bitcoin.conf file - replace rpcpassword with generate values.
+
+Example:
+```
+echo 'rpcuser=bitcoinrpc' > ~/.bitcoin/bitcoin.conf
+echo 'rpcpassword=XXXXyy1yXXXyyX1XXy1XXy1XXXy1Xy1y11XyXyXyyXXy' >>  ~/.bitcoin/bitcoin.conf
+echo 'server=1' >>  ~/.bitcoin/bitcoin.conf
+```
+
+Verify config-file values are in the file:
+```
+more ~/.bitcoin/bitcoin.conf
+```
+
+### Move blocks ###
 We now will move the blocks from the default location to the secondary drive, and create a static link.
 
 ```
-sudo cp ~/.bitcoin/blocks /media/data/
+cd /
+sudo rsync -a ~/.bitcoin/blocks /media/data/
 sudo rm -R ~/.bitcoin/blocks
-sudo ln -s /media/data/blocks blocks
+ln -s /media/data/blocks blocks
 ```
 
 To check this has worked perform the following
 ```
 cd ~/.bitcoin
-ls
+ls -al
 ```
 
-"Blocks" should be in a cyan colour.
+"blocks" should be in a cyan colour and look like this: blocks -> /media/data/blocks
+Node that it's the current user, bitcoin, that has file access.
 
-###Configure
-Last step we need to add the bitcoin config file.
-```
-cd ~/.bitcoin
-sudo nano bitcoin.conf
-```
+### Done ###
+The daemon should now be ready to start.
 
-Add the following:
+Type the following to start the node
 ```
-server=1
-rpcuser=username
-rpcpassword=xxxxxxxx
+bitcoind -daemon
 ```
 
-###Done
-The daemon should now be ready to start.  Simply type bitcoind to start the node.   You should see "bitcoind starting"
+You should see "bitcoind starting"
 
-###Trouble shooting
+### Trouble shooting ###
 
-You can check the drive space by using the command df -h
-Debug log files are located at ~/.bitcoin/debug.log  You can use the command sudo tail -f ~/.bitcoin/debug.log to monitor log files.
+You can check the drive space by using this command
+```
+df -h
+```
 
-###References
-https://help.ubuntu.com/community/InstallingANewHardDrive
-http://askubuntu.com/questions/73160/how-do-i-find-the-amount-of-free-space-on-my-hard-drive
+Debug log files are located at ~/.bitcoin/debug.log
+You can use the command this command to monitor log files:
+```
+sudo tail -f ~/.bitcoin/debug.log
+```
