@@ -2,6 +2,8 @@
 
 Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full BitcoinXT node permanently on using Microsoft's Azure.
 
+If you have any kind of company or startup, maybe sign up through https://www.microsoft.com/bizspark/signup/[1] and get $150 a month per employee of free Azure time for 3 years.
+
 ### Requirements ###
 1. Secondary drive large enough for the block chain growth
 2. No wallet
