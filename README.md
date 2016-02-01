@@ -92,18 +92,19 @@ sudo apt-get -y install build-essential libboost-all-dev automake libtool autoco
 sudo apt-get -y install libdb++-dev
 sudo apt-get -y install libboost-all-dev
 sudo apt-get -y install pkg-config
+sudo apt-get -y install libevent-dev
 sudo apt-get -y install libssl-dev
-sudo apt-get -y install libcurl4-openssl-dev
 sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
 sudo apt-get -y install git
 
 ```
 
-### Make BitcoinXT ###
-Now we will get the BitcoinXT source from GitHub and make the executables.
+### Make Bitcoin Classic ###
+Now we will get the Bitcoin Classic source from GitHub and make the executables.
 ```
-sudo git clone https://github.com/bitcoinxt/bitcoinxt
-cd bitcoinxt
+cd ~/
+sudo git clone https://github.com/bitcoinclassic/bitcoinclassic
+cd bitcoinclassic
 sudo ./autogen.sh
 sudo ./configure --with-cli=yes --with-gui=no --disable-wallet
 sudo make 
@@ -113,28 +114,13 @@ sudo make install
 Note, if there is an error on autogen.sh, re install the pre reqs.
 
 ### Initial run ###
-We will run bitcoind once so it generates the proper directories.
+We will run bitcoind for a few seconds once so it generates the proper directories.
 
 ```
  bitcoind -server
 ```
 
-Write down or copy the generated rpcuser and rpcpassword values.
-
-### Configure ###
-Run the following to generate the bitcoin.conf file - replace rpcpassword with generate values.
-
-Example:
-```
-echo 'rpcuser=bitcoinrpc' > ~/.bitcoin/bitcoin.conf
-echo 'rpcpassword=XXXXyy1yXXXyyX1XXy1XXy1XXXy1Xy1y11XyXyXyyXXy' >>  ~/.bitcoin/bitcoin.conf
-echo 'server=1' >>  ~/.bitcoin/bitcoin.conf
-```
-
-Verify config-file values are in the file.
-```
-more ~/.bitcoin/bitcoin.conf
-```
+Break out of the running program by pressing CTRL + c
 
 ### Move blocks ###
 We now move the blocks from the default location to the secondary drive, and create a static link.
@@ -187,7 +173,7 @@ The output should be something like this
 }
 ```
 
-Also, go to https://getaddr.bitnodes.io/ and type in the node network address, e.g. bitcoinxt-2.cloudapp.net, and click "CHECK NODE". Something like the following should show to verify you are running BitcoinXT:
+Also, go to https://getaddr.bitnodes.io/ and type in the node network address, e.g. bitcoinclassic21.northeurope.cloudapp.azure.com, and click "CHECK NODE". Something like the following should show to verify you are running Bitcoin Classic:
 
 `137.135.101.182:8333 /Bitcoin XT:0.11.0/`
 
