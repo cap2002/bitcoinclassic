@@ -105,6 +105,7 @@ Now we will get the Bitcoin Classic source from GitHub and make the executables.
 cd ~/
 sudo git clone https://github.com/bitcoinclassic/bitcoinclassic
 cd bitcoinclassic
+sudo git checkout classic-0.11.2.b1
 sudo ./autogen.sh
 sudo ./configure --with-cli=yes --with-gui=no --disable-wallet
 sudo make 
@@ -139,7 +140,8 @@ ls -al
 ```
 
 "blocks" should be in a cyan colour and look like this: blocks -> /media/data/blocks
-Node that it's the current user, bitcoin, that has file access.
+
+Node that it's the current user, satoshi, that has file access.
 
 ### Done ###
 The daemon should now be ready to start.
@@ -160,16 +162,16 @@ bitcoin-cli getinfo
 The output should be something like this
 ```javascript
 {
-    "version" : 110000,
-    "protocolversion" : 70010,
-    "blocks" : 90012,
-    "timeoffset" : -1,
-    "connections" : 8,
-    "proxy" : "",
-    "difficulty" : 3091.73689041,
-    "testnet" : false,
-    "relayfee" : 0.00001000,
-    "errors" : ""
+  "version": 129900,
+  "protocolversion": 70012,
+  "blocks": 1526,
+  "timeoffset": 0,
+  "connections": 8,
+  "proxy": "",
+  "difficulty": 1,
+  "testnet": false,
+  "relayfee": 0.00001000,
+  "errors": "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
 }
 ```
 
