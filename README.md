@@ -126,7 +126,7 @@ Break out of the running program by pressing CTRL + c
 We now move the blocks from the default location to the secondary drive, and create a static link.
 
 ```
-cd ~/
+cd ~/.bitcoin
 sudo rsync -a ~/.bitcoin/blocks /media/data/
 sudo rm -R ~/.bitcoin/blocks
 ln -s /media/data/blocks blocks
