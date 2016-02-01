@@ -64,6 +64,23 @@ You may want to restrict access to port 22 (SSH port) to your own IP.
 Now we can SSH into the VM, e.g. satoshi@bitcoinclassic21.northeurope.cloudapp.azure.com
 If connection was not made, try restarting the server.
 
+### Mount data drive ###
+Format the data drive using ext3 filesystem and mount it. The secondary drive should be named /dev/sdc
+```
+sudo fdisk /dev/sdc
+n
+p
+1
+(Enter)
+(Enter)
+w
+sudo mkfs.ext3 /dev/sdc1
+sudo mkdir /media/data
+sudo mount /dev/sdc1 /media/data
+cd /media/data
+sudo su -c "echo '/dev/sdc1 /media/data ext3 defaults 0 0' >> /etc/fstab"
+```
+
 ### Prerequisites ###
 
 For the software to build a few dependencies must be installed first.  You can install them by the following commands.
@@ -80,23 +97,6 @@ sudo apt-get -y install libcurl4-openssl-dev
 sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
 sudo apt-get -y install git
 
-```
-
-### Mount data drive ###
-Format the data drive using ext3 filesystem and mount it. The secondary drive should be named /dev/sdc
-```
-sudo fdisk /dev/sdc
-n
-p
-1
-(Enter)
-(Enter)
-w
-sudo mkfs.ext3 /dev/sdc1
-sudo mkdir /media/data
-sudo mount /dev/sdc1 /media/data
-cd /media/data
-sudo su -c "echo '/dev/sdc1 /media/data ext3 defaults 0 0' >> /etc/fstab"
 ```
 
 ### Make BitcoinXT ###
