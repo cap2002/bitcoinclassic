@@ -1,8 +1,8 @@
-# Host a BitcoinXT node on Ubuntu Server 14.04 LTS / Microsoft Azure #
+# Host a Bitcoicn Clasic node on Ubuntu Server 14.04 LTS / Microsoft Azure #
 
-Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full BitcoinXT node permanently on using Microsoft's Azure.
+Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full Bitcoin Classic node permanently on using Microsoft's Azure.
 
-If you have any kind of company or startup, maybe sign up through https://www.microsoft.com/bizspark/signup/ and get $150 a month per employee of free Azure time for 3 years.
+If you have **any kind** of company or startup, maybe sign up through https://www.microsoft.com/bizspark/signup/ and get $150 a month per employee of free Azure time for 3 years.
 
 ### Requirements ###
 1. Secondary drive large enough for the block chain growth
@@ -15,39 +15,54 @@ Start from the Microsoft Azure portal https://portal.azure.com
 
 ### Create an Ubuntu Server VM on Azure ###
 
-1. Select New -> Compute -> Ubuntu Server 14.04 LTS -> Create
-2. Enter Host Name, e.g. BitcoinXT-2
-3. Enter User name, e.g. bitcoin
-3. Set Authentication type, e.g. Password
-4. Set a password
-5. Select A2 Standard (2 cores, 3.5 GB RAM) as a minimum while the code is built and blockchain is synced, then scaled back to A1 when all is set.
-6. Select Option Configuration -> Network -> IP adresses ->
- 1. Instance IP address: On
+1. Basics
+ 1. Select New -> Compute -> Ubuntu Server 14.04 LTS -> Create
+ 2. Enter Name, e.g. BitcoinClassic-1
+ 3. Enter User name, e.g. Satoshi
+ 3. Set Authentication type, e.g. Password
+ 4. Set a strong password
+ 5. Make a Resource group, e.g. Bitcoin
+ 6. Select Location, e.g. North Europe
+ 7. Click OK
+2. Size
+ 1. Select View all
+ 2. Select A2 Standard (2 cores, 3.5 GB RAM) as a minimum while the code is built and blockchain is synced, then scale back to A1 when all is set.
+ 3. Click Select
+3. Settings
+ 1. Keep suggested Storage, Network and Monitoring settings
  2. Click OK
- 3. Click OK
-7. Select Endpoints -> New entry ->
- 1. Endpoint: Bitcoin
- 2. Private Port: 8333
- 3. Protocol: TCP
- 4. Public Port: 8333
- 5. Click OK
-8. Click OK to accept Optional config settings
-9. Select Location, e.g. East US
-10. Click Create
-11. Wait until the VM has been created
-
+4. Summary
+ 1. Click OK
+ 2. Wait for deployment to finish
+5. Assign DNS name label
+ 1. Click the public IP address -> All settings -> Configuration
+ 2. Enter a DNS name label, e.g. bitcoinclassic21
+ 3. Click the Save icon
+ 
 ### Attach a second 120GB empty disk (to be used for the block chain) ###
 
-1. Select Home
-2. Select the VM, e.g. BitcoinXT-2
-3. Select All settings -> Disks -> Attach New ->
- 1. Size (GB): 120
- 2. Click OK
-4. Wait until the new disk has been attached
+1. Click Microsoft Azure in the top-left corner
+2. Select Virtual machines -> BitcoinClassic-1
+ 1. Select Disks -> Attach new
+ 2. Size (GB): 120
+ 3. Click OK
+ 4. Wait until the new disk has been attached
+
+### Open port 8333 for inbound connections  ###
+
+1. Click All resources from the left menu
+2. Select Network security group - looks like a shield
+ 1. Select Inbound security rules
+ 2. Click Add
+ 3. Enter name, e.g. Bitcoin
+ 4. Change Protocol to TCP
+ 4. Change Destination port range to 8333
+ 5. Click OK
 
 You may want to restrict access to port 22 (SSH port) to your own IP.
 
-Now we can SSH into the VM, e.g. bitcoin@bitcoinxt-2.cloudapp.net. If connection was not made, try restarting the server.
+Now we can SSH into the VM, e.g. satoshi@bitcoinclassic21.northeurope.cloudapp.azure.com
+If connection was not made, try restarting the server.
 
 ### Prerequisites ###
 
