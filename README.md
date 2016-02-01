@@ -1,4 +1,4 @@
-# Host a Bitcoicn Clasic node on Ubuntu Server 14.04 LTS / Microsoft Azure #
+# Host a Bitcoicn Classic node on Ubuntu Server 14.04 LTS / Microsoft Azure #
 
 Motivation: To create comprehensive instructions for anyone to follow to allow users to deploy a full Bitcoin Classic node permanently on using Microsoft's Azure.
 
@@ -18,7 +18,7 @@ Start from the Microsoft Azure portal https://portal.azure.com
 1. Basics
  1. Select New -> Compute -> Ubuntu Server 14.04 LTS -> Create
  2. Enter Name, e.g. BitcoinClassic-1
- 3. Enter User name, e.g. Satoshi
+ 3. Enter User name, e.g. satoshi
  3. Set Authentication type, e.g. Password
  4. Set a strong password
  5. Make a Resource group, e.g. Bitcoin
