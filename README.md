@@ -179,22 +179,22 @@ bitcoin-cli getinfo
 The output should be something like this
 ```javascript
 {
-  "version": 129900,
-  "protocolversion": 70012,
-  "blocks": 1526,
-  "timeoffset": 0,
-  "connections": 8,
-  "proxy": "",
-  "difficulty": 1,
-  "testnet": false,
-  "relayfee": 0.00001000,
-  "errors": "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+    "version" : 110200,
+    "protocolversion" : 70002,
+    "blocks" : 125656,
+    "timeoffset" : 0,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 244112.48777434,
+    "testnet" : false,
+    "relayfee" : 0.00005000,
+    "errors" : ""
 }
 ```
 
 Also, go to https://getaddr.bitnodes.io/ and type in the node network address, e.g. bitcoinclassic21.northeurope.cloudapp.azure.com, and click "CHECK NODE". Something like the following should show to verify you are running Bitcoin Classic:
 
-`137.135.101.182:8333 /Bitcoin XT:0.11.0/`
+`bitcoinclassic42.northeurope.cloudapp.azure.com:8333 /Classic:0.11.2/`
 
 ### Trouble shooting ###
 
