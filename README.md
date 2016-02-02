@@ -121,6 +121,23 @@ We will run bitcoind for a few seconds once so it generates the proper directori
  bitcoind -server
 ```
 
+Write down or copy the generated rpcuser and rpcpassword values.
+ 
+### Configure ###
+Run the following to generate the bitcoin.conf file - replace rpcpassword with generate values.
+ 
+Example:
+```
+echo 'rpcuser=bitcoinrpc' > ~/.bitcoin/bitcoin.conf
+echo 'rpcpassword=XXXXyy1yXXXyyX1XXy1XXy1XXXy1Xy1y11XyXyXyyXXy' >>  ~/.bitcoin/bitcoin.conf
+echo 'server=1' >>  ~/.bitcoin/bitcoin.conf
+```
+ 
+Verify config-file values are in the file.
+```
+more ~/.bitcoin/bitcoin.conf
+```
+
 Break out of the running program by pressing CTRL + c
 
 ### Move blocks ###
