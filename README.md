@@ -166,7 +166,7 @@ Type the following to start the node.
 bitcoind -daemon
 ```
 
-You should see "bitcoind starting"
+You should see "Bitcoin server starting"
 
 ### Test ###
 Type the following to run a small test
