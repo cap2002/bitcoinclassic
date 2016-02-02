@@ -138,8 +138,6 @@ Verify config-file values are in the file.
 more ~/.bitcoin/bitcoin.conf
 ```
 
-Break out of the running program by pressing CTRL + c
-
 ### Move blocks ###
 We now move the blocks from the default location to the secondary drive, and create a static link.
 
