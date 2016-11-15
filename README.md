@@ -103,12 +103,12 @@ sudo apt-get -y install git
 Now we will get the Bitcoin Classic source from GitHub and make the executables.
 ```
 cd ~/
-sudo git clone https://github.com/bitcoinclassic/bitcoinclassic
+git clone https://github.com/bitcoinclassic/bitcoinclassic
 cd bitcoinclassic
-sudo git checkout classic-0.11.2.b1
-sudo ./autogen.sh
-sudo ./configure --with-cli=yes --with-gui=no --disable-wallet
-sudo make 
+git checkout classic-0.11.2.b1
+./autogen.sh
+./configure --with-cli=yes --with-gui=no --disable-wallet
+make 
 sudo make install
 ```
 
